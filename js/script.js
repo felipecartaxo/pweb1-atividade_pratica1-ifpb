@@ -35,8 +35,26 @@ function cadastrarUsuario(nome, idade, cpf) {
     // Função específica para adicionar lógica de exclusão do botão, sem necessariamente fazer a implementação dentro da função que alimenta o app
     adicionarLogicaExclusao(botaoRemoverElement, liElement);
 
+    // Criando botão de edição
+    const botaoEditarElement = document.createElement("button");
+    botaoEditarElement.textContent = "Edit";
+
+    // Lógica para editar o nome dos usuários
+    botaoEditarElement.addEventListener("click", () => {
+        const novoNome = prompt(); // Abre um prompt solicitando o novo nome
+        spanElement.remove();
+        
+        // Altera o conteúdo da span contendo o nome lido pelo prompt
+        spanElement.textContent = `Nome: ${novoNome} | Idade: ${idade} | CPF: ${cpf} `;
+
+        // Atualiza a li
+        liElement.appendChild(spanElement);
+    })
+
     // Adiciona o botão de remover ao span
     spanElement.appendChild(botaoRemoverElement);
+    // Adiciona o botão de editar ao span
+    spanElement.appendChild(botaoEditarElement);
     // Adiciona o span a li
     liElement.appendChild(spanElement);
     // Por fim, adiciona a li, contendo a span, que, por sua vez, também contém o botão de remover, a ul
