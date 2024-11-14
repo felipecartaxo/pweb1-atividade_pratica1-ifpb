@@ -41,7 +41,7 @@ function cadastrarUsuario(nome, idade, cpf) {
 
     // Lógica para editar o nome dos usuários
     botaoEditarElement.addEventListener("click", () => {
-        const novoNome = prompt(); // Abre um prompt solicitando o novo nome
+        const novoNome = prompt(); // Abre um prompt solicitando o novo nome (simulando um modal)
         spanElement.remove();
         
         // Altera o conteúdo da span contendo o nome lido pelo prompt
