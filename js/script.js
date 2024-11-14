@@ -1,19 +1,42 @@
-// Json contendo os usuários que serão automaticamente inseridos
-const usuariosJson = { // Verificar se está realmente como um json
-    "usuarios": [
-        {"nome": "Lola", "idade": 23, "cpf": "12345"},
-        {"nome": "Ashley", "idade": 26, "cpf": "78910"},
-        {"nome": "Aurora", "idade": 21, "cpf": "13579"}
-    ]
-};
+// JSON contendo os usuários que serão inseridos
+const usuariosJson = `[
+    {
+        "nome": "Ana",
+        "idade": 23,
+        "cpf": "11111"
+    },
+    {
+        "nome": "Carla",
+        "idade": 36,
+        "cpf": "22222"
+    },
+    {
+        "nome": "Trísia",
+        "idade": 21,
+        "cpf": "33333"
+    },
+    {
+        "nome": "Karen",
+        "idade": 38,
+        "cpf": "44444"
+    },
+    {
+        "nome": "Aurora",
+        "idade": 14,
+        "cpf": "55555"
+    }
+]`;
+
+// Parse da string JSON para um array de objetos
+const usuariosArray = JSON.parse(usuariosJson);
 
 // Criando uma ul e atribuindo-o a uma constante
 const listaNomesElement = document.createElement("ul");
 // Adiciona a ul em questão no body
 document.body.appendChild(listaNomesElement);
 
-// Itera no Json, chamando a função "inserirDados" para cada iteração, passando como argumento da função os atributos de cada objeto
-for (let usuario of usuariosJson.usuarios) {
+// Itera no array, chamando a função "cadastrarUsuario" para cada iteração
+for (let usuario of usuariosArray) {
     cadastrarUsuario(usuario.nome, usuario.idade, usuario.cpf);
 }
 
@@ -25,14 +48,13 @@ function cadastrarUsuario(nome, idade, cpf) {
     const spanElement = document.createElement("span");
     
     // Alterando o texto do span com os valores dos objetos
-    spanElement.textContent = spanElement.textContent = `Nome: ${nome} | Idade: ${idade} | CPF: ${cpf} `
+    spanElement.textContent = `Nome: ${nome} | Idade: ${idade} | CPF: ${cpf} `;
 
     // Criando botão de remover
     const botaoRemoverElement = document.createElement("button");
-    // Alterando o texto/conteúdo do botão
     botaoRemoverElement.textContent = "X";
 
-    // Função específica para adicionar lógica de exclusão do botão, sem necessariamente fazer a implementação dentro da função que alimenta o app
+    // Função específica para adicionar lógica de exclusão do botão
     adicionarLogicaExclusao(botaoRemoverElement, liElement);
 
     // Criando botão de edição
@@ -41,15 +63,15 @@ function cadastrarUsuario(nome, idade, cpf) {
 
     // Lógica para editar o nome dos usuários
     botaoEditarElement.addEventListener("click", () => {
-        const novoNome = prompt(); // Abre um prompt solicitando o novo nome (simulando um modal)
-        spanElement.remove();
-        
-        // Altera o conteúdo da span contendo o nome lido pelo prompt
-        spanElement.textContent = `Nome: ${novoNome} | Idade: ${idade} | CPF: ${cpf} `;
-
-        // Atualiza a li
-        liElement.appendChild(spanElement);
-    })
+        const novoNome = prompt("Digite o novo nome:");
+        if (novoNome) {
+            // Atualiza o texto do span com o novo nome
+            spanElement.textContent = `Nome: ${novoNome} | Idade: ${idade} | CPF: ${cpf} `;
+            // Adiciona os botões de remover e editar novamente ao span
+            spanElement.appendChild(botaoRemoverElement);
+            spanElement.appendChild(botaoEditarElement);
+        }
+    });
 
     // Adiciona o botão de remover ao span
     spanElement.appendChild(botaoRemoverElement);
@@ -57,11 +79,11 @@ function cadastrarUsuario(nome, idade, cpf) {
     spanElement.appendChild(botaoEditarElement);
     // Adiciona o span a li
     liElement.appendChild(spanElement);
-    // Por fim, adiciona a li, contendo a span, que, por sua vez, também contém o botão de remover, a ul
+    // Por fim, adiciona a li à lista ul
     listaNomesElement.appendChild(liElement);
 }
 
-// Função que vai inserir os dados passados nas inputs
+// Função para inserir os dados passados nos inputs
 function inserirDados() {
     const inputNomeElement = document.querySelector("#nome");
     const inputIdadeElement = document.querySelector("#idade");
@@ -70,9 +92,9 @@ function inserirDados() {
     cadastrarUsuario(inputNomeElement.value, inputIdadeElement.value, inputCpfElement.value);
 }
 
-// Função dedicada a apenas impelementar a lógica de exclusão aos respectivos botões
+// Função dedicada a implementar a lógica de exclusão aos respectivos botões
 function adicionarLogicaExclusao(botaoRemover, li) {
     botaoRemover.addEventListener("click", () => {
         li.remove();
-    })
+    });
 }
